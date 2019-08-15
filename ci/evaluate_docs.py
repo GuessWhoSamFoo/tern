@@ -16,7 +16,7 @@ import sys
 
 repo = Repo(os.getcwd())
 try:
-    repo.git.remote('add', 'upstream', 'git@github.com:vmware/tern.git')
+    repo.git.remote('add', 'upstream', 'https://github.com/vmware/tern.git')
 except GitCommandError:
     pass
 repo.git.fetch('upstream')
