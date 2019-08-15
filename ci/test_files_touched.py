@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from git import Repo
+from git import GitCommandError
 import os
 import re
 import sys
@@ -13,7 +14,10 @@ import subprocess  # nosec
 # This script is written to be used with circleci
 
 repo = Repo(os.getcwd())
-repo.git.remote('add', 'upstream', 'git@github.com:vmware/tern.git')
+try:
+    repo.git.remote('add', 'upstream', 'git@github.com:vmware/tern.git')
+except GitCommandError:
+    pass
 repo.git.fetch('upstream')
 
 hcommit = repo.head.commit

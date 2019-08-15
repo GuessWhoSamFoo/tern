@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from git import Repo
+from git import GitCommandError
 import os
 import re
 import sys
@@ -61,7 +62,10 @@ if __name__ == '__main__':
 
     # We are in the 'tern' directory
     repo = Repo(os.getcwd())
-    repo.git.remote('add', 'upstream', 'git@github.com:vmware/tern.git')
+    try:
+        repo.git.remote('add', 'upstream', 'git@github.com:vmware/tern.git')
+    except GitCommandError:
+        pass
     repo.git.fetch('upstream')
     # Will return commit IDs differentiating HEAD and master
     commitstr = repo.git.rev_list('HEAD', '^upstream/master')
